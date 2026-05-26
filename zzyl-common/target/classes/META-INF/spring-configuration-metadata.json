@@ -1,0 +1,88 @@
+{
+  "groups": [
+    {
+      "name": "zzyl.framework.jwt",
+      "type": "com.zzyl.properties.JwtTokenManagerProperties",
+      "sourceType": "com.zzyl.properties.JwtTokenManagerProperties"
+    },
+    {
+      "name": "zzyl.framework.oss",
+      "type": "com.zzyl.properties.AliOssConfigProperties",
+      "sourceType": "com.zzyl.properties.AliOssConfigProperties"
+    },
+    {
+      "name": "zzyl.framework.swagger",
+      "type": "com.zzyl.properties.SwaggerConfigProperties",
+      "sourceType": "com.zzyl.properties.SwaggerConfigProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "zzyl.framework.jwt.base64-encoded-secret-key",
+      "type": "java.lang.String",
+      "description": "签名密码",
+      "sourceType": "com.zzyl.properties.JwtTokenManagerProperties"
+    },
+    {
+      "name": "zzyl.framework.jwt.ttl",
+      "type": "java.lang.Integer",
+      "description": "有效时间",
+      "sourceType": "com.zzyl.properties.JwtTokenManagerProperties"
+    },
+    {
+      "name": "zzyl.framework.oss.access-key-id",
+      "type": "java.lang.String",
+      "description": "秘钥Id",
+      "sourceType": "com.zzyl.properties.AliOssConfigProperties"
+    },
+    {
+      "name": "zzyl.framework.oss.access-key-secret",
+      "type": "java.lang.String",
+      "description": "秘钥",
+      "sourceType": "com.zzyl.properties.AliOssConfigProperties"
+    },
+    {
+      "name": "zzyl.framework.oss.bucket-name",
+      "type": "java.lang.String",
+      "description": "桶名称",
+      "sourceType": "com.zzyl.properties.AliOssConfigProperties"
+    },
+    {
+      "name": "zzyl.framework.oss.endpoint",
+      "type": "java.lang.String",
+      "description": "域名站点",
+      "sourceType": "com.zzyl.properties.AliOssConfigProperties"
+    },
+    {
+      "name": "zzyl.framework.swagger.contact-email",
+      "type": "java.lang.String",
+      "sourceType": "com.zzyl.properties.SwaggerConfigProperties"
+    },
+    {
+      "name": "zzyl.framework.swagger.contact-name",
+      "type": "java.lang.String",
+      "sourceType": "com.zzyl.properties.SwaggerConfigProperties"
+    },
+    {
+      "name": "zzyl.framework.swagger.contact-url",
+      "type": "java.lang.String",
+      "sourceType": "com.zzyl.properties.SwaggerConfigProperties"
+    },
+    {
+      "name": "zzyl.framework.swagger.description",
+      "type": "java.lang.String",
+      "sourceType": "com.zzyl.properties.SwaggerConfigProperties"
+    },
+    {
+      "name": "zzyl.framework.swagger.swagger-path",
+      "type": "java.lang.String",
+      "sourceType": "com.zzyl.properties.SwaggerConfigProperties"
+    },
+    {
+      "name": "zzyl.framework.swagger.title",
+      "type": "java.lang.String",
+      "sourceType": "com.zzyl.properties.SwaggerConfigProperties"
+    }
+  ],
+  "hints": []
+}
