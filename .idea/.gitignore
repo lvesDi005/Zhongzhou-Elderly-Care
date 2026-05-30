@@ -9,4 +9,4 @@
 /dataSources/
 /dataSources.local.xml
 # Application configuration files
-/zzyl-web/src/main/resources/application.yml
+**/application-local.yml
