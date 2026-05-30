@@ -293,4 +293,9 @@
        (#{item.username,jdbcType=VARCHAR}, #{item.openId,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR}, #{item.userType,jdbcType=VARCHAR}, #{item.avatar,jdbcType=VARCHAR}, #{item.nickName,jdbcType=VARCHAR}, #{item.email,jdbcType=VARCHAR}, #{item.realName,jdbcType=VARCHAR}, #{item.mobile,jdbcType=VARCHAR}, #{item.sex,jdbcType=CHAR}, #{item.dataState,jdbcType=CHAR}, #{item.deptNo,jdbcType=VARCHAR}, #{item.postNo,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.remark,jdbcType=VARCHAR}, #{item.createBy,jdbcType=BIGINT}, #{item.updateBy,jdbcType=BIGINT}, #{item.isLeader,jdbcType=INTEGER}, #{item.isDelete,jdbcType=INTEGER})
     </foreach>
   </insert>
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from sys_user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
 </mapper>

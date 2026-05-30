@@ -1,5 +1,7 @@
 package com.zzyl.service;
 
+import com.zzyl.base.ResponseResult;
+import com.zzyl.dto.BedDto;
 import com.zzyl.vo.BedVo;
 
 import java.util.List;
@@ -17,4 +19,11 @@ public interface BedService {
      */
     List<BedVo> getBedsByRoomId(Long roomId);
 
+    String addBed(BedVo bed);
+
+    String deleteBed(Integer bedId);
+
+    ResponseResult updateBed(BedVo bed);
+
+    BedVo getBedById(Long id);
 }

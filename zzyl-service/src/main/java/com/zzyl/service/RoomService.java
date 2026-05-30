@@ -70,5 +70,6 @@ public interface RoomService {
     List<RoomVo> getRoomsCheckedByFloorId(Long floorId);
 
 
+    List<RoomVo> getRoomsWithDeviceByFloorId(Long floorId);
 }
 

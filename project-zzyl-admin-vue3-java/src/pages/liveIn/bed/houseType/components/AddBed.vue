@@ -97,8 +97,9 @@ const formVisible = ref(false) // 弹窗
 const isChick = ref(false) // 防止连续点击提交按钮
 // 表单数据
 const formData = ref<Object | any>({
+  id: null,
   bedNumber: '',
-  sort: 1
+  sort: 1,
 })
 // 表单校验
 const rules = {
@@ -125,13 +126,13 @@ watch(
 watch(
   () => props.data,
   (val) => {
-    if (val.id) {
-      formData.value.id = val.id
+    if (val) {
+      formData.value.id = val.id ?? null
+      formData.value.bedNumber = val.bedNumber ?? ''
+      formData.value.sort = val.sort ?? 1
     }
-
-    formData.value.bedNumber = val.bedNumber
-    formData.value.sort = val.sort
-  }
+  },
+  { immediate: true, deep: true }
 )
 // -----定义方法------
 // 提交表单

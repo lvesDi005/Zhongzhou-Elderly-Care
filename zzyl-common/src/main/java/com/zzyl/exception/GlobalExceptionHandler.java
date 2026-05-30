@@ -5,6 +5,7 @@ import com.zzyl.base.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
 @Slf4j
@@ -40,6 +41,12 @@ public class GlobalExceptionHandler {
             log.error("其他未知异常:{}", exception.getMessage());
         }
         return ResponseResult.error(500,exception.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseResult<Object> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
+        log.error("参数类型转换异常:{}", exception.getMessage());
+        return ResponseResult.error(400, "参数格式错误：" + exception.getName() + " 应为数字类型");
     }
 
 }

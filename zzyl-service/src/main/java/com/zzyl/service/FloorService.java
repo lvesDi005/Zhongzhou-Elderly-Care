@@ -6,6 +6,7 @@ import com.zzyl.dto.FloorDto;
 import com.zzyl.vo.FloorVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 楼层服务接口
@@ -57,4 +58,5 @@ public interface FloorService {
      */
     List<FloorVo> selectAllByNur();
 
+    List<FloorVo> getAllFloorsWithDevice();
 }

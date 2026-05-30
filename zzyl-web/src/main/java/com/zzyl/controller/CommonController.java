@@ -40,14 +40,18 @@ public class CommonController {
             @RequestPart("file") MultipartFile file) throws Exception {
 
         // 校验是否为图片文件
-        try {
-            BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-        } catch (Exception e) {
-            throw new RuntimeException("上传图片失败");
-        }
-
         if (file.getSize() == 0) {
             throw new RuntimeException("上传图片不能为空");
+        }
+        try {
+            BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
+            if (bufferedImage == null) {
+                throw new RuntimeException("文件格式不正确，请上传图片文件");
+            }
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("上传图片失败");
         }
 
         // 获得原始文件名

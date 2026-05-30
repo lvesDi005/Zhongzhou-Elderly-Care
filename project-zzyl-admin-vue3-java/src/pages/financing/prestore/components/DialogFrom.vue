@@ -70,7 +70,7 @@
               <t-upload
                 ref="uploadRef"
                 v-model="photoFile"
-                action="api/common/upload"
+                action="/api/common/upload"
                 :autoUpload="autoUpload"
                 theme="image"
                 :size-limit="sizeLimit"

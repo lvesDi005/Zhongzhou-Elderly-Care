@@ -63,7 +63,7 @@
       <t-upload
         ref="uploadRef"
         v-model="uploadFile"
-        action="api/common/upload"
+        action="/api/common/upload"
         :autoUpload="autoUpload"
         :size-limit="sizeLimit"
         tips="请上传pdf文件，大小在60M以内"

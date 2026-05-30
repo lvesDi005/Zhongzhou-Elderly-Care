@@ -11,6 +11,7 @@ import com.zzyl.vo.RoomTypeVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,11 +48,10 @@ public class RoomTypeServiceImpl implements RoomTypeService {
      */
     @Override
     public void removeRoomType(Long id) {
-
-        //先删除图片
         RoomType roomType = roomTypeMapper.findRoomTypeById(id);
-        fileStorageService.delete(roomType.getPhoto());
-        //删除房间类型
+        if (StringUtils.hasText(roomType.getPhoto())) {
+            fileStorageService.delete(roomType.getPhoto());
+        }
         roomTypeMapper.removeRoomType(id);
     }
 
@@ -62,6 +62,14 @@ public class RoomTypeServiceImpl implements RoomTypeService {
      */
     @Override
     public void modifyRoomType(Long id, RoomTypeDto roomTypeDTO) {
+        // 查询旧数据，如果图片有变化则删除旧图片
+        RoomType oldRoomType = roomTypeMapper.findRoomTypeById(id);
+        String oldPhoto = oldRoomType.getPhoto();
+        String newPhoto = roomTypeDTO.getPhoto();
+        if (StringUtils.hasText(oldPhoto) && !oldPhoto.equals(newPhoto)) {
+            fileStorageService.delete(oldPhoto);
+        }
+
         RoomType roomType = new RoomType();
         BeanUtils.copyProperties(roomTypeDTO, roomType);
         roomType.setId(id);

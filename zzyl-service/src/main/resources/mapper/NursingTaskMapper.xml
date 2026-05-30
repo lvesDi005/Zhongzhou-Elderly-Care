@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzyl.mapper.NursingTaskMapper">
+    <resultMap id="taskMap" type="com.zzyl.entity.NursingTask">
+        <id column="id" property="id"/>
+        <result column="task_no" property="taskNo"/>
+        <result column="elder_id" property="elderId"/>
+        <result column="project_id" property="projectId"/>
+        <result column="plan_id" property="planId"/>
+        <result column="status" property="status"/>
+        <result column="execute_time" property="executeTime"/>
+        <result column="execute_by" property="executeBy"/>
+        <result column="complete_time" property="completeTime"/>
+        <result column="cancel_reason" property="cancelReason"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+    <select id="selectByPage" resultMap="taskMap">
+        select t.* from nursing_task t
+        left join elder e on t.elder_id = e.id
+        <where>
+            <if test="elderName != null and elderName != ''">
+                and e.name like concat('%',#{elderName},'%')
+            </if>
+            <if test="status != null">
+                and t.status = #{status}
+            </if>
+            <if test="planId != null">
+                and t.plan_id = #{planId}
+            </if>
+        </where>
+        order by t.create_time desc
+    </select>
+</mapper>

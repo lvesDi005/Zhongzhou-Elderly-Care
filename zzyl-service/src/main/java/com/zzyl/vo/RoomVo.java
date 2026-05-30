@@ -47,4 +47,6 @@ public class RoomVo extends BaseVo {
 
     @ApiModelProperty(value = "床位费用")
     private BigDecimal price;
+
+
 }

@@ -62,6 +62,6 @@ zzyl:
       ttl: 24
     oss:
       endpoint: oss-cn-beijing.aliyuncs.com
-      accessKeyId: LTAI5t8PCxTwBfuW21a9HQVn
-      accessKeySecret: oTOmQf60O6r4NpGJKZZhEVrOVCMm2h
+      accessKeyId: LTAI5tAYQTW3VpwmdwfmKcWd
+      accessKeySecret: uLW7XSRAknXo9Asdjd0uuJqbJQHnPX
       bucketName: yl6668

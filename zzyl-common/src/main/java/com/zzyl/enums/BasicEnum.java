@@ -13,12 +13,16 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum BasicEnum implements IBasicEnum {
 
+
     SUCCEED(200, "操作成功"),
     SECURITY_ACCESSDENIED_FAIL(401, "权限不足!"),
     LOGIN_FAIL(401, "用户登录失败"),
     LOGIN_LOSE_EFFICACY(401, "登录状态失效，请重新登录"),
     SYSYTEM_FAIL(500, "系统运行异常"),
 
+    BED_INSERT_FAIL(1531,"床位新增失败"),
+    BED_NAME_EXIST(1532, "修改的床位名称已存在"),
+    BED_NUMBER_EXIST(1533, "床位编号已存在"),
 
     //权限相关异常：1400-1499
     DEPT_DEPTH_UPPER_LIMIT(1400, "部门最多4级"),
@@ -74,8 +78,8 @@ public enum BasicEnum implements IBasicEnum {
     TIME_ALREADY_RESERVATED_BY_PHONE(1527, "此手机号已预约该时间"),
     RETREAT_SHOULD_IN_COST_TERM(1528, "请在费用期限内发起退住申请"),
     UPLOAD_FILE_EMPTY(1529, "上传图片不能为空"),
-    DONE_ORDER_CANNOT_REFUND(1530, "已执行的订单不可退款"),
-    BED_INSERT_FAIL(1531,"床位新增失败");
+    DONE_ORDER_CANNOT_REFUND(1530, "已执行的订单不可退款");
+
 
     /**
      * 编码
@@ -85,4 +89,5 @@ public enum BasicEnum implements IBasicEnum {
      * 信息
      */
     public final String msg;
+
 }

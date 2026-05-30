@@ -49,6 +49,8 @@ public interface RoomMapper {
     List<RoomVo> selectByFloorIdWithNur(Long floorId);
 
     List<RoomVo> selectRoomsCheckedByFloorId(Long floorId);
+
+    List<RoomVo> getRoomsWithDeviceByFloorId(Long floorId);
 }
 
 

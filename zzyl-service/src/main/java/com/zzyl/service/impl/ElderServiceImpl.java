@@ -3,11 +3,14 @@ package com.zzyl.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.zzyl.dto.ElderDto;
+import com.zzyl.dto.NursingElderDto;
 import com.zzyl.entity.Elder;
 import com.zzyl.mapper.ElderMapper;
 import com.zzyl.service.ElderService;
 import com.zzyl.utils.ObjectUtil;
 import com.zzyl.vo.ElderVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ElderServiceImpl implements ElderService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ElderServiceImpl.class);
 
     @Autowired
     private ElderMapper elderMapper;
@@ -142,6 +147,16 @@ public class ElderServiceImpl implements ElderService {
     @Override
     public void clearBedNum(Long elderId) {
         elderMapper.clearBedNum(elderId);
+    }
+
+    @Override
+    public void setNursing(List<NursingElderDto> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        for (NursingElderDto dto : list) {
+            logger.info("Setting nursing for elder {}: nursingIds={}", dto.getElderId(), dto.getNursingIds());
+        }
     }
 }
 

@@ -40,6 +40,13 @@ public class ElderController extends BaseController {
     public ResponseResult selectByIdCard(@RequestParam String  idCard) {
         return success(elderService.selectByIdCard(idCard));
     }
+
+    @PutMapping("/setNursing")
+    @ApiOperation(value = "设置老人护理员")
+    public ResponseResult setNursing(@RequestBody List<NursingElderDto> list) {
+        elderService.setNursing(list);
+        return success();
+    }
 }
 
 

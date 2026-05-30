@@ -147,5 +147,11 @@ public class RoomServiceImpl implements RoomService {
         return roomMapper.selectRoomsCheckedByFloorId(floorId);
     }
 
+    @Override
+    public List<RoomVo> getRoomsWithDeviceByFloorId(Long floorId) {
+
+        return roomMapper.getRoomsWithDeviceByFloorId(floorId);
+    }
+
 }
 

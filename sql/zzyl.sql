@@ -455,22 +455,20 @@ DROP TABLE IF EXISTS `sys_dept`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sys_dept` (
-  `dept_id` bigint NOT NULL AUTO_INCREMENT COMMENT '部门id',
-  `parent_id` bigint DEFAULT '0' COMMENT '父部门id',
-  `ancestors` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '祖级列表',
-  `dept_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '部门名称',
-  `order_num` int DEFAULT '0' COMMENT '显示顺序',
-  `leader` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '负责人',
-  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '联系电话',
-  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '邮箱',
-  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
-  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '创建者',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '部门ID',
+  `parent_dept_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '父部门编号',
+  `dept_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '部门编号',
+  `dept_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '部门名称',
+  `sort_no` int DEFAULT NULL COMMENT '显示顺序',
+  `data_state` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '数据状态：0正常 1停用',
+  `leader_id` bigint DEFAULT NULL COMMENT '负责人ID',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`dept_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='部门表';
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='部门表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -479,7 +477,7 @@ CREATE TABLE `sys_dept` (
 
 LOCK TABLES `sys_dept` WRITE;
 /*!40000 ALTER TABLE `sys_dept` DISABLE KEYS */;
-INSERT INTO `sys_dept` VALUES (100,0,'0','若依科技',0,'若依','15888888888','ry@qq.com','0','0','admin','2024-08-14 02:48:23','',NULL),(101,100,'0,100','深圳总公司',1,'若依','15888888888','ry@qq.com','0','0','admin','2024-08-14 02:48:23','',NULL),(102,100,'0,100','长沙分公司',2,'若依','15888888888','ry@qq.com','0','0','admin','2024-08-14 02:48:23','',NULL),(103,101,'0,100,101','研发部门',1,'若依','15888888888','ry@qq.com','0','0','admin','2024-08-14 02:48:23','',NULL),(104,101,'0,100,101','市场部门',2,'若依','15888888888','ry@qq.com','0','0','admin','2024-08-14 02:48:23','',NULL),(105,101,'0,100,101','测试部门',3,'若依','15888888888','ry@qq.com','0','0','admin','2024-08-14 02:48:23','',NULL),(106,101,'0,100,101','财务部门',4,'若依','15888888888','ry@qq.com','0','0','admin','2024-08-14 02:48:23','',NULL),(107,101,'0,100,101','运维部门',5,'若依','15888888888','ry@qq.com','0','0','admin','2024-08-14 02:48:23','',NULL),(108,102,'0,100,102','市场部门',1,'若依','15888888888','ry@qq.com','0','0','admin','2024-08-14 02:48:23','',NULL),(109,102,'0,100,102','财务部门',2,'若依','15888888888','ry@qq.com','0','0','admin','2024-08-14 02:48:23','',NULL);
+INSERT INTO `sys_dept` VALUES (1,'0','100','养老机构总部',1,'0',1,'2024-08-14 02:48:23',NULL,1,NULL,NULL),(2,'100','10001','行政部',1,'0',1,'2024-08-14 02:48:23',NULL,1,NULL,NULL),(3,'100','10002','护理部',2,'0',1,'2024-08-14 02:48:23',NULL,1,NULL,NULL),(4,'100','10003','市场部',3,'0',1,'2024-08-14 02:48:23',NULL,1,NULL,NULL),(5,'100','10004','财务部',4,'0',1,'2024-08-14 02:48:23',NULL,1,NULL,NULL),(6,'10001','1000101','人事组',1,'0',1,'2024-08-14 02:48:23',NULL,1,NULL,NULL),(7,'10001','1000102','后勤组',2,'0',1,'2024-08-14 02:48:23',NULL,1,NULL,NULL),(8,'10002','1000201','护理一组',1,'0',1,'2024-08-14 02:48:23',NULL,1,NULL,NULL),(9,'10002','1000202','护理二组',2,'0',1,'2024-08-14 02:48:23',NULL,1,NULL,NULL);
 /*!40000 ALTER TABLE `sys_dept` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -772,17 +770,18 @@ DROP TABLE IF EXISTS `sys_post`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sys_post` (
-  `post_id` bigint NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
-  `post_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '岗位编码',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
+  `dept_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '部门编号',
+  `post_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '岗位编号',
   `post_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '岗位名称',
-  `post_sort` int NOT NULL COMMENT '显示顺序',
-  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '状态（0正常 1停用）',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '创建者',
+  `sort_no` int DEFAULT NULL COMMENT '显示顺序',
+  `data_state` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '数据状态：0正常 1停用',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`post_id`) USING BTREE
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='岗位信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -792,7 +791,7 @@ CREATE TABLE `sys_post` (
 
 LOCK TABLES `sys_post` WRITE;
 /*!40000 ALTER TABLE `sys_post` DISABLE KEYS */;
-INSERT INTO `sys_post` VALUES (1,'ceo','董事长',1,'0','admin','2024-08-14 02:48:23','',NULL,''),(2,'se','项目经理',2,'0','admin','2024-08-14 02:48:23','',NULL,''),(3,'hr','人力资源',3,'0','admin','2024-08-14 02:48:23','',NULL,''),(4,'user','普通员工',4,'0','admin','2024-08-14 02:48:23','',NULL,'');
+INSERT INTO `sys_post` VALUES (1,'100','10001','院长',1,'0','2024-08-14 02:48:23',NULL,1,NULL,NULL),(2,'10001','1000101','行政主管',1,'0','2024-08-14 02:48:23',NULL,1,NULL,NULL),(3,'10002','1000201','护士长',1,'0','2024-08-14 02:48:23',NULL,1,NULL,NULL),(4,'10002','1000202','护理员',2,'0','2024-08-14 02:48:23',NULL,1,NULL,NULL);
 /*!40000 ALTER TABLE `sys_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -804,21 +803,18 @@ DROP TABLE IF EXISTS `sys_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sys_role` (
-  `role_id` bigint NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '角色ID',
   `role_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色名称',
-  `role_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色权限字符串',
-  `role_sort` int NOT NULL COMMENT '显示顺序',
+  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '权限标识',
+  `sort_no` int NOT NULL COMMENT '显示顺序',
+  `data_state` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '数据状态（0正常 1停用）',
   `data_scope` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
-  `menu_check_strictly` tinyint(1) DEFAULT '1' COMMENT '菜单树选择项是否关联显示',
-  `dept_check_strictly` tinyint(1) DEFAULT '1' COMMENT '部门树选择项是否关联显示',
-  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色状态（0正常 1停用）',
-  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`role_id`) USING BTREE
+  `create_by` bigint DEFAULT NULL COMMENT '创建者',
+  `update_by` bigint DEFAULT NULL COMMENT '更新者',
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -828,7 +824,7 @@ CREATE TABLE `sys_role` (
 
 LOCK TABLES `sys_role` WRITE;
 /*!40000 ALTER TABLE `sys_role` DISABLE KEYS */;
-INSERT INTO `sys_role` VALUES (1,'超级管理员','admin',1,'1',1,1,'0','0','admin','2024-08-14 02:48:23','',NULL,'超级管理员'),(2,'普通角色','common',2,'2',1,1,'0','0','admin','2024-08-14 02:48:23','',NULL,'普通角色');
+INSERT INTO `sys_role` VALUES (1,'超级管理员','admin',1,'0','1','2024-08-14 02:48:23',NULL,'超级管理员',NULL,NULL),(2,'普通角色','common',2,'0','2','2024-08-14 02:48:23',NULL,'普通角色',NULL,NULL);
 /*!40000 ALTER TABLE `sys_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -840,10 +836,17 @@ DROP TABLE IF EXISTS `sys_role_dept`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sys_role_dept` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
   `role_id` bigint NOT NULL COMMENT '角色ID',
-  `dept_id` bigint NOT NULL COMMENT '部门ID',
-  PRIMARY KEY (`role_id`,`dept_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色和部门关联表';
+  `dept_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '部门编号',
+  `data_state` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '数据状态（0正常 1停用）',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建者',
+  `update_by` bigint DEFAULT NULL COMMENT '更新者',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色和部门关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -852,7 +855,7 @@ CREATE TABLE `sys_role_dept` (
 
 LOCK TABLES `sys_role_dept` WRITE;
 /*!40000 ALTER TABLE `sys_role_dept` DISABLE KEYS */;
-INSERT INTO `sys_role_dept` VALUES (2,100),(2,101),(2,105);
+INSERT INTO `sys_role_dept` VALUES (1,2,'100','0','2024-08-14 02:48:23',NULL,NULL,NULL,NULL),(2,2,'10001','0','2024-08-14 02:48:23',NULL,NULL,NULL,NULL),(3,2,'10002','0','2024-08-14 02:48:23',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `sys_role_dept` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -888,27 +891,29 @@ DROP TABLE IF EXISTS `sys_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sys_user` (
-  `user_id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `dept_id` bigint DEFAULT NULL COMMENT '部门ID',
-  `user_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户账号',
-  `nick_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户昵称',
-  `user_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '00' COMMENT '用户类型（00系统用户）',
-  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '用户邮箱',
-  `phonenumber` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '手机号码',
-  `sex` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
-  `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '头像地址',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户账号',
+  `open_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'open_id标识',
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '密码',
-  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
-  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
-  `login_ip` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '最后登录IP',
-  `login_date` datetime DEFAULT NULL COMMENT '最后登录时间',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '创建者',
+  `user_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '用户类型（0:系统用户,1:客户）',
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '头像地址',
+  `nick_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户昵称',
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '用户邮箱',
+  `real_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '真实姓名',
+  `mobile` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '手机号码',
+  `sex` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
+  `data_state` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '数据状态（0正常 1停用）',
+  `dept_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '部门编号',
+  `post_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '岗位编号',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户信息表';
+  `create_by` bigint DEFAULT NULL COMMENT '创建者',
+  `update_by` bigint DEFAULT NULL COMMENT '更新者',
+  `is_leader` int DEFAULT '0' COMMENT '是否是部门leader(0:否，1：是)',
+  `is_delete` int DEFAULT '0' COMMENT '是否删除(0:未删除 1:已删除)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1671403256519078165 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -917,7 +922,7 @@ CREATE TABLE `sys_user` (
 
 LOCK TABLES `sys_user` WRITE;
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
-INSERT INTO `sys_user` VALUES (1,103,'admin','若依','00','ry@163.com','15888888888','1','','$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2','0','0','127.0.0.1','2024-10-06 22:45:21','admin','2024-08-14 02:48:23','','2024-10-06 14:45:19','管理员'),(2,105,'ry','若依','00','ry@qq.com','15666666666','1','','$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2','0','0','127.0.0.1','2024-08-14 02:48:23','admin','2024-08-14 02:48:23','',NULL,'测试员');
+INSERT INTO `sys_user` VALUES (1,'admin','','$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2','0','','管理员','ry@163.com','超级管理员','15888888888','0','0','100','10001','2024-08-14 02:48:23','2024-10-06 14:45:19','超级管理员',NULL,NULL,1,0),(2,'ry','','$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2','0','','若依','ry@qq.com','测试员','15666666666','0','0','10002','1000201','2024-08-14 02:48:23',NULL,'测试员',1,NULL,0,0),(1671403256519078153,'zhangsan','','$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2','0','','张三','','张三','','0','0','100','10001','2023-09-26 16:10:27',NULL,NULL,1,NULL,1,0),(1671403256519078138,'lisi','','$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2','0','','李四','','李四','','0','0','10002','1000201','2023-09-26 16:10:27',NULL,NULL,1,NULL,1,0),(1671403256519078164,'wangwu','','$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2','0','','王五','','王五','','0','0','10002','1000202','2023-09-26 16:10:27',NULL,NULL,1,NULL,0,0);
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -953,10 +958,17 @@ DROP TABLE IF EXISTS `sys_user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sys_user_role` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `role_id` bigint NOT NULL COMMENT '角色ID',
-  PRIMARY KEY (`user_id`,`role_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户和角色关联表';
+  `data_state` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '数据状态（0正常 1停用）',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建者',
+  `update_by` bigint DEFAULT NULL COMMENT '更新者',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户和角色关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -965,8 +977,474 @@ CREATE TABLE `sys_user_role` (
 
 LOCK TABLES `sys_user_role` WRITE;
 /*!40000 ALTER TABLE `sys_user_role` DISABLE KEYS */;
-INSERT INTO `sys_user_role` VALUES (1,1),(2,2);
+INSERT INTO `sys_user_role` VALUES (1,1,1,'0','2024-08-14 02:48:23',NULL,NULL,NULL,NULL),(2,2,2,'0','2024-08-14 02:48:23',NULL,1,NULL,NULL),(3,1671403256519078153,2,'0','2023-09-26 16:10:27',NULL,1,NULL,NULL),(4,1671403256519078138,2,'0','2023-09-26 16:10:27',NULL,1,NULL,NULL),(5,1671403256519078164,2,'0','2023-09-26 16:10:27',NULL,1,NULL,NULL);
 /*!40000 ALTER TABLE `sys_user_role` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+--
+-- Table structure for table `member`
+--
+
+DROP TABLE IF EXISTS `member`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `member` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '会员ID',
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '手机号',
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '头像',
+  `open_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '微信OpenID',
+  `gender` int DEFAULT NULL COMMENT '性别',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='会员表';
+
+--
+-- Dumping data for table `member`
+--
+
+LOCK TABLES `member` WRITE;
+/*!40000 ALTER TABLE `member` DISABLE KEYS */;
+INSERT INTO `member` VALUES (1,'13800138001','张三','https://itheim.oss-cn-beijing.aliyuncs.com/avatar1.png','oWxRz123456',1,'2024-09-01 10:00:00',NULL,1,NULL,'老人家属'),(2,'13800138002','李四','https://itheim.oss-cn-beijing.aliyuncs.com/avatar2.png','oWxRz789012',0,'2024-09-05 14:30:00',NULL,1,NULL,'老人家属');
+/*!40000 ALTER TABLE `member` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `contract`
+--
+
+DROP TABLE IF EXISTS `contract`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `contract` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '合同ID',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '合同名称',
+  `contract_no` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '合同编号',
+  `pdf_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '合同pdf地址',
+  `member_id` bigint DEFAULT NULL COMMENT '会员id',
+  `member_phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '丙方手机号',
+  `member_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '丙方名称',
+  `elder_id` bigint DEFAULT NULL COMMENT '老人id',
+  `elder_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '老人名称',
+  `start_time` datetime DEFAULT NULL COMMENT '合同开始时间',
+  `end_time` datetime DEFAULT NULL COMMENT '合同结束时间',
+  `status` int DEFAULT NULL COMMENT '合同状态',
+  `sort` int DEFAULT NULL COMMENT '排序',
+  `level_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '级别描述',
+  `check_in_no` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '入住编号',
+  `sign_date` datetime DEFAULT NULL COMMENT '签约时间',
+  `release_submitter` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '解除提交人',
+  `release_date` datetime DEFAULT NULL COMMENT '解除时间',
+  `release_pdf_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '解除pdf地址',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `contract_no` (`contract_no`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='合同表';
+
+--
+-- Dumping data for table `contract`
+--
+
+LOCK TABLES `contract` WRITE;
+/*!40000 ALTER TABLE `contract` DISABLE KEYS */;
+INSERT INTO `contract` VALUES (1,'入住合同','HT-2024-001',NULL,1,'13800138001','张三',325,'13211223322','2024-09-01 00:00:00','2025-08-31 00:00:00',1,1,'1号护理等级','CI-2024-001','2024-09-01 10:00:00',NULL,NULL,NULL,'2024-09-01 10:00:00',NULL,1,NULL,NULL),(2,'入住合同','HT-2024-002',NULL,2,'13800138002','李四',326,'李天龙','2024-09-10 00:00:00','2025-09-09 00:00:00',1,2,'2号护理等级','CI-2024-002','2024-09-10 10:00:00',NULL,NULL,NULL,'2024-09-10 10:00:00',NULL,1,NULL,NULL);
+/*!40000 ALTER TABLE `contract` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `visit`
+--
+
+DROP TABLE IF EXISTS `visit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `visit` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '来访ID',
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '来访人',
+  `mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '手机号',
+  `time` datetime DEFAULT NULL COMMENT '来访时间',
+  `visitor` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '探访人',
+  `type` int DEFAULT NULL COMMENT '来访类型：0参观来访 1探访来访',
+  `status` int DEFAULT NULL COMMENT '来访状态：0待报道 1已完成 2取消 3过期',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='来访表';
+
+--
+-- Dumping data for table `visit`
+--
+
+LOCK TABLES `visit` WRITE;
+/*!40000 ALTER TABLE `visit` DISABLE KEYS */;
+INSERT INTO `visit` VALUES (1,'王五','13900139001','2024-10-15 14:00:00','李天龙',1,1,'2024-10-15 10:00:00','2024-10-15 15:00:00',1,1,'探访老人李天龙'),(2,'赵六','13900139002','2024-10-16 09:00:00','13211223322',0,0,'2024-10-16 08:00:00',NULL,1,NULL,'参观养老院'),(3,'孙七','13900139003','2024-10-16 14:30:00','老李',1,1,'2024-10-16 13:00:00','2024-10-16 16:00:00',1,1,NULL);
+/*!40000 ALTER TABLE `visit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_resource`
+--
+
+DROP TABLE IF EXISTS `sys_resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sys_resource` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '资源ID',
+  `resource_no` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '资源编号',
+  `parent_resource_no` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '父资源编号',
+  `resource_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '资源名称',
+  `resource_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '资源类型：s平台 c目录 m菜单 r按钮',
+  `request_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '请求地址',
+  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '权限标识',
+  `data_state` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '数据状态：0正常 1停用',
+  `sort_no` int DEFAULT NULL COMMENT '排序号',
+  `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '图标',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='资源表';
+
+--
+-- Dumping data for table `sys_resource`
+--
+
+LOCK TABLES `sys_resource` WRITE;
+/*!40000 ALTER TABLE `sys_resource` DISABLE KEYS */;
+INSERT INTO `sys_resource` VALUES (1,'S001',NULL,'智慧养老系统','s','/','','0',1,'system','2024-09-01 00:00:00',NULL,1,NULL,'平台根节点'),(2,'M001','S001','入住管理','m','/liveIn','system:liveIn:list','0',1,'building','2024-09-01 00:00:00',NULL,1,NULL,'入住管理菜单'),(3,'M002','S001','服务管理','m','/serve','system:serve:list','0',2,'service','2024-09-01 00:00:00',NULL,1,NULL,'服务管理菜单'),(4,'M003','S001','财务管理','m','/financing','system:financing:list','0',3,'money','2024-09-01 00:00:00',NULL,1,NULL,'财务管理菜单'),(5,'M004','S001','系统管理','m','/permission','system:permission:list','0',4,'user','2024-09-01 00:00:00',NULL,1,NULL,'系统管理菜单'),(6,'C001','M001','楼层房间','c','/liveIn/bed/smartBed','system:floor:list','0',1,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'楼层房间管理'),(7,'C002','M001','房型管理','c','/liveIn/bed/houseType','system:roomType:list','0',2,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'房型管理'),(8,'C003','M001','合同管理','c','/liveIn/contract','system:contract:list','0',3,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'合同管理'),(9,'C004','M002','护理等级','c','/serve/plan/grade','system:nursingLevel:list','0',1,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'护理等级管理'),(10,'C005','M002','护理项目','c','/serve/plan/project','system:nursingProject:list','0',2,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'护理项目管理'),(11,'C006','M002','护理计划','c','/serve/plan/nurse','system:nursingPlan:list','0',3,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'护理计划管理'),(12,'C007','M003','账单管理','c','/financing/bill','system:bill:list','0',1,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'账单管理'),(13,'C008','M004','用户管理','c','/permission/user','system:user:list','0',1,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'用户管理'),(14,'C009','M004','角色管理','c','/permission/role','system:role:list','0',2,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'角色管理'),(15,'C010','M004','菜单管理','c','/permission/menu','system:menu:list','0',3,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'菜单管理'),(16,'C011','M004','部门管理','c','/permission/dept','system:dept:list','0',4,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'部门管理'),(17,'C012','M004','岗位管理','c','/permission/post','system:post:list','0',5,NULL,'2024-09-01 00:00:00',NULL,1,NULL,'岗位管理');
+/*!40000 ALTER TABLE `sys_resource` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_role_resource`
+--
+
+DROP TABLE IF EXISTS `sys_role_resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sys_role_resource` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `role_id` bigint DEFAULT NULL COMMENT '角色ID',
+  `resource_no` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '资源编号',
+  `data_state` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '数据状态：0正常 1停用',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色资源关联表';
+
+--
+-- Dumping data for table `sys_role_resource`
+--
+
+LOCK TABLES `sys_role_resource` WRITE;
+/*!40000 ALTER TABLE `sys_role_resource` DISABLE KEYS */;
+INSERT INTO `sys_role_resource` VALUES (1,1,'S001','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-平台'),(2,1,'M001','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-入住管理'),(3,1,'M002','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-服务管理'),(4,1,'M003','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-财务管理'),(5,1,'M004','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-系统管理'),(6,1,'C001','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-楼层房间'),(7,1,'C002','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-房型管理'),(8,1,'C003','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-合同管理'),(9,1,'C004','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-护理等级'),(10,1,'C005','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-护理项目'),(11,1,'C006','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-护理计划'),(12,1,'C007','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-账单管理'),(13,1,'C008','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-用户管理'),(14,1,'C009','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-角色管理'),(15,1,'C010','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-菜单管理'),(16,1,'C011','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-部门管理'),(17,1,'C012','0','2024-09-01 00:00:00',NULL,1,NULL,'超级管理员-岗位管理');
+/*!40000 ALTER TABLE `sys_role_resource` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `check_in`
+--
+
+DROP TABLE IF EXISTS `check_in`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `check_in` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '入住ID',
+  `check_in_code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '入住编号',
+  `elder_id` bigint DEFAULT NULL COMMENT '老人ID',
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '申请标题',
+  `reason` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '申请原因',
+  `applicat` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '申请人',
+  `applicat_id` bigint DEFAULT NULL COMMENT '申请人ID',
+  `counselor` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '咨询师',
+  `flow_status` int DEFAULT NULL COMMENT '流程状态',
+  `status` int DEFAULT NULL COMMENT '状态',
+  `create_type` int DEFAULT NULL COMMENT '创建类型',
+  `other_apply_info` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '其他申请信息',
+  `review_info` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '审核信息',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='入住登记表';
+
+--
+-- Dumping data for table `check_in`
+--
+
+LOCK TABLES `check_in` WRITE;
+/*!40000 ALTER TABLE `check_in` DISABLE KEYS */;
+INSERT INTO `check_in` VALUES (1,'CI-2024-001',325,'13211223322入住申请','家属工作繁忙，需要专业护理','张三',1,'李顾问',2,1,0,NULL,'审批通过','2024-08-27 16:43:20','2024-08-28 10:00:00',1,1,NULL),(2,'CI-2024-002',326,'李天龙入住申请','老人独居，需要照护','李四',2,'王顾问',2,1,0,NULL,'审批通过','2024-08-27 16:50:09','2024-08-28 10:00:00',1,1,NULL),(3,'CI-2024-003',327,'老李入住申请','需要专业护理服务','李四',2,'王顾问',1,0,0,NULL,NULL,'2024-09-12 18:51:36',NULL,1,NULL,'待审核');
+/*!40000 ALTER TABLE `check_in` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `check_in_config`
+--
+
+DROP TABLE IF EXISTS `check_in_config`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `check_in_config` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '配置ID',
+  `check_in_id` bigint DEFAULT NULL COMMENT '入住ID',
+  `bed_id` bigint DEFAULT NULL COMMENT '床位ID',
+  `bed_cost` decimal(10,2) DEFAULT NULL COMMENT '床位费用',
+  `nursing_level_id` int DEFAULT NULL COMMENT '护理等级ID',
+  `nursing_cost` decimal(10,2) DEFAULT NULL COMMENT '护理费用',
+  `deposit_amount` decimal(10,2) DEFAULT NULL COMMENT '押金金额',
+  `government_subsidy` decimal(10,2) DEFAULT NULL COMMENT '政府补贴',
+  `medical_insurance_payment` decimal(10,2) DEFAULT NULL COMMENT '医保支付',
+  `other_cost` decimal(10,2) DEFAULT NULL COMMENT '其他费用',
+  `cost_start_time` datetime DEFAULT NULL COMMENT '费用开始时间',
+  `cost_end_time` datetime DEFAULT NULL COMMENT '费用结束时间',
+  `check_in_start_time` datetime DEFAULT NULL COMMENT '入住开始时间',
+  `check_in_end_time` datetime DEFAULT NULL COMMENT '入住结束时间',
+  `room_id` bigint DEFAULT NULL COMMENT '房间ID',
+  `floor_id` bigint DEFAULT NULL COMMENT '楼层ID',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='入住配置表';
+
+--
+-- Dumping data for table `check_in_config`
+--
+
+LOCK TABLES `check_in_config` WRITE;
+/*!40000 ALTER TABLE `check_in_config` DISABLE KEYS */;
+INSERT INTO `check_in_config` VALUES (1,1,5,3000.00,77,2000.00,5000.00,0.00,0.00,0.00,'2024-09-01 00:00:00','2025-08-31 00:00:00','2024-09-01 00:00:00','2025-08-31 00:00:00',4,1,'2024-08-28 10:00:00',NULL,1,NULL,NULL),(2,2,6,4500.00,76,1500.00,5000.00,0.00,0.00,0.00,'2024-09-10 00:00:00','2025-09-09 00:00:00','2024-09-10 00:00:00','2025-09-09 00:00:00',4,1,'2024-08-28 10:00:00',NULL,1,NULL,NULL);
+/*!40000 ALTER TABLE `check_in_config` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bill`
+--
+
+DROP TABLE IF EXISTS `bill`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bill` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '账单ID',
+  `bill_no` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '账单编号',
+  `elder_id` bigint DEFAULT NULL COMMENT '老人ID',
+  `amount` decimal(10,2) DEFAULT NULL COMMENT '金额',
+  `balance` decimal(10,2) DEFAULT NULL COMMENT '余额',
+  `status` int DEFAULT NULL COMMENT '状态：0未支付 1已支付 2已取消',
+  `bill_type` int DEFAULT NULL COMMENT '账单类型：0床位费 1护理费 2其他',
+  `start_time` datetime DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime DEFAULT NULL COMMENT '结束时间',
+  `pay_time` datetime DEFAULT NULL COMMENT '支付时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='账单表';
+
+--
+-- Dumping data for table `bill`
+--
+
+LOCK TABLES `bill` WRITE;
+/*!40000 ALTER TABLE `bill` DISABLE KEYS */;
+INSERT INTO `bill` VALUES (1,'BILL-202410-001',325,3000.00,5000.00,1,0,'2024-10-01 00:00:00','2024-10-31 23:59:59','2024-10-05 10:00:00','2024-10-01 00:00:00',NULL,1,NULL,'10月床位费'),(2,'BILL-202410-002',325,2000.00,5000.00,0,1,'2024-10-01 00:00:00','2024-10-31 23:59:59',NULL,'2024-10-01 00:00:00',NULL,1,NULL,'10月护理费'),(3,'BILL-202410-003',326,4500.00,3000.00,1,0,'2024-10-01 00:00:00','2024-10-31 23:59:59','2024-10-05 10:00:00','2024-10-01 00:00:00',NULL,1,NULL,'10月床位费'),(4,'BILL-202410-004',326,1500.00,3000.00,0,1,'2024-10-01 00:00:00','2024-10-31 23:59:59',NULL,'2024-10-01 00:00:00',NULL,1,NULL,'10月护理费');
+/*!40000 ALTER TABLE `bill` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `nursing_task`
+--
+
+DROP TABLE IF EXISTS `nursing_task`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `nursing_task` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+  `task_no` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '任务编号',
+  `elder_id` bigint DEFAULT NULL COMMENT '老人ID',
+  `project_id` bigint DEFAULT NULL COMMENT '护理项目ID',
+  `plan_id` int DEFAULT NULL COMMENT '护理计划ID',
+  `status` int DEFAULT NULL COMMENT '任务状态：0待执行 1已完成 2已取消',
+  `execute_time` datetime DEFAULT NULL COMMENT '执行时间',
+  `execute_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '执行人',
+  `complete_time` datetime DEFAULT NULL COMMENT '完成时间',
+  `cancel_reason` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '取消原因',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='护理任务表';
+
+--
+-- Dumping data for table `nursing_task`
+--
+
+LOCK TABLES `nursing_task` WRITE;
+/*!40000 ALTER TABLE `nursing_task` DISABLE KEYS */;
+INSERT INTO `nursing_task` VALUES (1,'TASK-202410-001',325,1,133,0,'2024-10-20 19:16:49',NULL,NULL,NULL,'2024-10-20 08:00:00',NULL,1,NULL,'修剪指甲-待执行'),(2,'TASK-202410-002',326,5,134,1,'2024-10-20 16:56:09','王护士','2024-10-20 17:00:00',NULL,'2024-10-20 08:00:00','2024-10-20 17:00:00',1,1,'助浴-已完成'),(3,'TASK-202410-003',325,4,133,1,'2024-10-20 08:00:00','李护士','2024-10-20 08:30:00',NULL,'2024-10-20 08:00:00','2024-10-20 08:30:00',1,1,'助餐-已完成'),(4,'TASK-202410-004',326,1,134,0,'2024-10-21 19:28:45',NULL,NULL,NULL,'2024-10-21 08:00:00',NULL,1,NULL,'修剪指甲-待执行');
+/*!40000 ALTER TABLE `nursing_task` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `message`
+--
+
+DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `message` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '消息ID',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '消息标题',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '消息内容',
+  `type` int DEFAULT NULL COMMENT '消息类型',
+  `user_id` bigint DEFAULT NULL COMMENT '接收用户ID',
+  `is_read` int DEFAULT '0' COMMENT '是否已读：0未读 1已读',
+  `relevant_id` bigint DEFAULT NULL COMMENT '关联业务ID',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='消息通知表';
+
+--
+-- Dumping data for table `message`
+--
+
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO `message` VALUES (1,'入住审批通过','尊敬的张三，您为13211223322提交的入住申请已审批通过，请尽快办理入住手续。',1,1,1,1,'2024-08-28 10:00:00',NULL,1,NULL,'系统通知'),(2,'入住审批通过','尊敬的李四，您为李天龙提交的入住申请已审批通过，请尽快办理入住手续。',1,2,1,2,'2024-08-28 10:00:00',NULL,1,NULL,'系统通知'),(3,'账单提醒','13211223322的10月护理费2000元尚未支付，请及时缴费。',2,1,0,2,'2024-10-20 08:00:00',NULL,1,NULL,'缴费提醒'),(4,'护理任务提醒','今日有新的护理任务待执行，请登录系统查看。',3,1,0,NULL,'2024-10-20 06:00:00',NULL,1,NULL,'任务提醒');
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `iot_device`
+--
+
+DROP TABLE IF EXISTS `iot_device`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `iot_device` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '设备ID',
+  `device_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '设备名称',
+  `product_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '产品Key',
+  `device_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '设备密钥',
+  `device_status` int DEFAULT NULL COMMENT '设备状态：0离线 1在线',
+  `iot_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '物联网平台ID',
+  `room_id` bigint DEFAULT NULL COMMENT '房间ID',
+  `bed_id` bigint DEFAULT NULL COMMENT '床位ID',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='物联网设备表';
+
+--
+-- Dumping data for table `iot_device`
+--
+
+LOCK TABLES `iot_device` WRITE;
+/*!40000 ALTER TABLE `iot_device` DISABLE KEYS */;
+INSERT INTO `iot_device` VALUES (1,'101室智能床垫','bed_sensor','dev_sec_001',1,'iot_001',1,1,'2024-09-01 10:00:00',NULL,1,NULL,'1楼101室-1号床'),(2,'102室智能床垫','bed_sensor','dev_sec_002',1,'iot_002',2,2,'2024-09-01 10:00:00',NULL,1,NULL,'1楼102室-1号床'),(3,'101室紧急呼叫器','sos_button','dev_sec_003',0,'iot_003',1,NULL,'2024-09-01 10:00:00',NULL,1,NULL,'1楼101室紧急呼叫'),(4,'104室烟雾报警器','smoke_alarm','dev_sec_004',1,'iot_004',4,NULL,'2024-09-01 10:00:00',NULL,1,NULL,'1楼104室烟雾报警');
+/*!40000 ALTER TABLE `iot_device` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `alert_rule`
+--
+
+DROP TABLE IF EXISTS `alert_rule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `alert_rule` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '规则ID',
+  `rule_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '规则名称',
+  `device_id` bigint DEFAULT NULL COMMENT '设备ID',
+  `rule_type` int DEFAULT NULL COMMENT '规则类型',
+  `threshold` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '阈值',
+  `status` int DEFAULT '1' COMMENT '状态：0禁用 1启用',
+  `notify_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '通知方式',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='告警规则表';
+
+--
+-- Dumping data for table `alert_rule`
+--
+
+LOCK TABLES `alert_rule` WRITE;
+/*!40000 ALTER TABLE `alert_rule` DISABLE KEYS */;
+INSERT INTO `alert_rule` VALUES (1,'离床超时告警',1,1,'>30分钟',1,'1','2024-09-01 10:00:00',NULL,1,NULL,'老人离床超过30分钟触发告警'),(2,'心率异常告警',1,2,'<50或>120',1,'1','2024-09-01 10:00:00',NULL,1,NULL,'心率异常触发告警'),(3,'烟雾告警',4,3,'1',1,'2','2024-09-01 10:00:00',NULL,1,NULL,'检测到烟雾触发告警');
+/*!40000 ALTER TABLE `alert_rule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `alert_data`
+--
+
+DROP TABLE IF EXISTS `alert_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `alert_data` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '告警ID',
+  `alert_rule_id` bigint DEFAULT NULL COMMENT '告警规则ID',
+  `device_id` bigint DEFAULT NULL COMMENT '设备ID',
+  `alert_content` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '告警内容',
+  `alert_time` datetime DEFAULT NULL COMMENT '告警时间',
+  `status` int DEFAULT NULL COMMENT '处理状态：0未处理 1已处理',
+  `handle_time` datetime DEFAULT NULL COMMENT '处理时间',
+  `handle_user` bigint DEFAULT NULL COMMENT '处理人',
+  `handle_result` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '处理结果',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_by` bigint DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint DEFAULT NULL COMMENT '更新人id',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='告警数据表';
+
+--
+-- Dumping data for table `alert_data`
+--
+
+LOCK TABLES `alert_data` WRITE;
+/*!40000 ALTER TABLE `alert_data` DISABLE KEYS */;
+INSERT INTO `alert_data` VALUES (1,2,1,'老人心率为130次/分，超出正常范围','2024-10-20 14:30:00',1,'2024-10-20 14:35:00',1,'已查看，老人刚运动完属于正常情况','2024-10-20 14:30:00','2024-10-20 14:35:00',1,1,NULL),(2,1,1,'老人已离床超过30分钟','2024-10-20 15:00:00',0,NULL,NULL,NULL,'2024-10-20 15:00:00',NULL,1,NULL,NULL);
+/*!40000 ALTER TABLE `alert_data` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

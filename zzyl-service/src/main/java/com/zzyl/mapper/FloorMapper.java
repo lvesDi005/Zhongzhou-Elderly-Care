@@ -2,9 +2,11 @@ package com.zzyl.mapper;
 
 import com.zzyl.entity.Floor;
 import com.zzyl.vo.FloorVo;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface FloorMapper {
@@ -22,5 +24,7 @@ public interface FloorMapper {
     List<FloorVo> selectAllRoomAndBed();
 
     List<FloorVo> selectAllByNur();
+
+    List<FloorVo> getAllFloorsWithDevice();
 
 }

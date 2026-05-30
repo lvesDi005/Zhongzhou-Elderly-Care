@@ -61,7 +61,7 @@
             <t-upload
               ref="uploadRef1"
               v-model="file"
-              action="api/common/upload"
+              action="/api/common/upload"
               :is-batch-upload="true"
               :autoUpload="autoUpload"
               :size-limit="sizeLimit"

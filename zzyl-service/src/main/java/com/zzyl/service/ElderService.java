@@ -4,6 +4,7 @@
 package com.zzyl.service;
 
 import com.zzyl.dto.ElderDto;
+import com.zzyl.dto.NursingElderDto;
 import com.zzyl.entity.Elder;
 import com.zzyl.vo.ElderVo;
 
@@ -87,5 +88,7 @@ public interface ElderService {
      * @param elderId
      */
     void clearBedNum(Long elderId);
+
+    void setNursing(List<NursingElderDto> list);
 }
 

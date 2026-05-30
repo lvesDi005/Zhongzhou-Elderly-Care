@@ -118,4 +118,28 @@
                  left join room r on r.floor_id = f.id
                  left join bed b on b.room_id = r.id
     </select>
+    <select id="getAllFloorsWithDevice" resultMap="floorResultMapWithRoomAndBed">
+        select f.name,
+               f.id,
+               r.id as rid,
+               r.code,
+               r.sort,
+               r.type_name,
+               r.floor_id,
+               b.id as bid,
+               b.bed_number,
+               b.sort,
+               b.bed_status,
+               b.room_id,
+               b.create_by,
+               b.update_by,
+               b.remark,
+               b.create_time,
+               b.update_time
+        from floor f
+                 left join room r on r.floor_id = f.id
+                 left join bed b on b.room_id = r.id
+        order by f.code
+    </select>
+
 </mapper>

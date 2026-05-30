@@ -31,6 +31,24 @@
         <result column="eid" property="elderId"/>
         <result column="price" property="price"/>
     </resultMap>
+    <insert id="addBed">
+        insert into bed(bed_number, bed_status, room_id, sort, create_by, update_by, remark, create_time, update_time)
+        values (#{bedNumber}, #{bedStatus}, #{roomId}, #{sort}, #{createBy}, #{updateBy}, #{remark}, #{createTime}, #{updateTime})
+    </insert>
+    <update id="updateBed">
+        update bed
+        <set>
+            <if test="bed.bedNumber != null">bed_number = #{bed.bedNumber},</if>
+            <if test="bed.bedStatus != null">bed_status = #{bed.bedStatus},</if>
+            <if test="bed.roomId != null">room_id = #{bed.roomId},</if>
+            <if test="bed.sort != null">sort = #{bed.sort},</if>
+            <if test="bed.updateBy != null">update_by = #{bed.updateBy},</if>
+            <if test="bed.remark != null">remark = #{bed.remark},</if>
+            <if test="bed.updateTime != null">update_time = #{bed.updateTime},</if>
+        </set>
+        where id = #{bed.id}
+    </update>
+
 
     <select id="getBedsByRoomId" resultMap="BedVoResultMap" parameterType="java.lang.Long">
         select b.*,
@@ -40,5 +58,13 @@
                  left join elder e on b.id = e.bed_id
         where b.room_id = #{roomId}
         order by b.sort, b.create_time desc
+    </select>
+    <select id="getBedById" resultMap="BedVoResultMap" parameterType="java.lang.Long">
+        select b.*,
+               e.name  as ename,
+               e.id    as eid
+        from bed b
+                 left join elder e on b.id = e.bed_id
+        where b.id = #{id}
     </select>
 </mapper>

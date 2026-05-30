@@ -75,7 +75,7 @@
                   <t-upload
                     ref="uploadRef"
                     v-model="photoFile"
-                    action="api/common/upload"
+                    action="/api/common/upload"
                     :autoUpload="autoUpload"
                     theme="image"
                     :size-limit="sizeLimit"
@@ -112,7 +112,7 @@
       </t-dialog>
     </div>
   </template>
-  
+
   <script setup lang="ts">
   import { ref, watch } from 'vue'
   import { MessagePlugin, ValidateResultContext } from 'tdesign-vue-next'
@@ -326,8 +326,7 @@
   const handleSuccess = (params) => {
     const photo = params.response.data
     formData.value.image = photo
-    photoFile.value[0].response.url = photo
-    photoFile.value[0].url = photo
+    photoFile.value = [{ url: photo }]
   }
   // 限制图片的大小
   const beforeUpload = (file) => {

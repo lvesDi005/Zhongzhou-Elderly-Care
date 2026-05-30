@@ -64,4 +64,13 @@ public class FloorController extends BaseController {
         return success(floorService.getAllWithRoomAndBed());
     }
 
+    /**
+     * getAllFloorsWithDevice
+     */
+    @GetMapping("/getAllFloorsWithDevice")
+    @ApiOperation(value = "获取所有楼层 （包含设备）", notes = "无需参数，获取所有楼层，返回楼层信息列表")
+    public ResponseResult<List<FloorVo>> getAllFloorsWithDevice() {
+        return success(floorService.getAllFloorsWithDevice());
+    }
+
 }

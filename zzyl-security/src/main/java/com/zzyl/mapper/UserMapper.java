@@ -29,4 +29,6 @@ public interface UserMapper {
      * @author hewei
      */
     int batchInsert(@Param("list") List<User> list);
+
+    User selectByUsername(@Param("username") String username);
 }

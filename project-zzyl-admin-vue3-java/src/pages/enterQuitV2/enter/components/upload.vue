@@ -5,7 +5,7 @@
     <t-upload
       ref="uploadRef"
       v-model="uploadFile1"
-      action="api/common/upload"
+      action="/api/common/upload"
       :autoUpload="autoUpload"
       theme="image"
       :size-limit="sizeLimit"
@@ -21,7 +21,7 @@
     <t-upload
       ref="uploadRef"
       v-model="uploadFile2"
-      action="api/common/upload"
+      action="/api/common/upload"
       :autoUpload="autoUpload"
       theme="image"
       :size-limit="sizeLimit"
@@ -37,7 +37,7 @@
     <t-upload
       ref="uploadRef"
       v-model="uploadFile3"
-      action="api/common/upload"
+      action="/api/common/upload"
       :autoUpload="autoUpload"
       theme="image"
       :size-limit="sizeLimit"

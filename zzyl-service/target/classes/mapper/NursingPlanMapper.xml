@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzyl.mapper.NursingPlanMapper">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into nursing_plan(sort_no, plan_name, status, create_time, create_by, update_by, remark)
+        values (#{sortNo}, #{planName}, #{status}, #{createTime}, #{createBy}, #{updateBy}, #{remark})
+    </insert>
+    <update id="update">
+        update nursing_plan
+        set sort_no    = #{sortNo},
+            plan_name  = #{planName},
+            status     = #{status},
+            update_by  = #{updateBy},
+            update_time = #{updateTime},
+            remark     = #{remark}
+        where id = #{id}
+    </update>
+    <select id="selectByPage" resultType="com.zzyl.entity.NursingPlan">
+        select * from nursing_plan
+        <where>
+            <if test="planName != null and planName != ''">
+                and plan_name like concat('%',#{planName},'%')
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by sort_no
+    </select>
+</mapper>
