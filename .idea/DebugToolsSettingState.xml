@@ -3,5 +3,10 @@
   <component name="DebugToolsSettingState">
     <option name="agentPath" value="C:\Users\lgdai\.debugTools\lib\debug-tools-agent-4.6.1.jar" />
     <option name="agentVersion" value="4.6.1" />
+    <option name="ignoreStaticFieldPathMap">
+      <map>
+        <entry key="default" value="C:\Users\lgdai\Desktop\heima-studying\project\zzyl\backend\zzyl\.idea\DebugTools\IgnoreStaticField\default.conf" />
+      </map>
+    </option>
   </component>
 </project>
