@@ -2,6 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zzyl.mapper.NursingLevelMapper">
+    <resultMap id="levelVoMap" type="com.zzyl.entity.NursingLevel">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="lplan_id" property="lplanId"/>
+        <result column="fee" property="fee"/>
+        <result column="status" property="status"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="remark" property="remark"/>
+        <result column="plan_name" property="planName"/>
+        <result column="real_name" property="creator"/>
+    </resultMap>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into nursing_level(name, lplan_id, fee, status, description, create_time, create_by, update_by, remark)
         values (#{name}, #{lplanId}, #{fee}, #{status}, #{description}, #{createTime}, #{createBy}, #{updateBy}, #{remark})
@@ -18,16 +33,26 @@
             remark      = #{remark}
         where id = #{id}
     </update>
-    <select id="selectByPage" resultType="com.zzyl.entity.NursingLevel">
-        select * from nursing_level
+    <select id="selectByPage" resultMap="levelVoMap">
+        select nl.*, np.plan_name, su.real_name
+        from nursing_level nl
+        left join nursing_plan np on nl.lplan_id = np.id
+        left join sys_user su on nl.create_by = su.id
         <where>
             <if test="name != null and name != ''">
-                and name like concat('%',#{name},'%')
+                and nl.name like concat('%',#{name},'%')
             </if>
             <if test="status != null">
-                and status = #{status}
+                and nl.status = #{status}
             </if>
         </where>
-        order by id
+        order by nl.id
+    </select>
+    <select id="selectById" resultMap="levelVoMap">
+        select nl.*, np.plan_name, su.real_name
+        from nursing_level nl
+        left join nursing_plan np on nl.lplan_id = np.id
+        left join sys_user su on nl.create_by = su.id
+        where nl.id = #{id}
     </select>
 </mapper>

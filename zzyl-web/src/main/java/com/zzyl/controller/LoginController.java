@@ -2,13 +2,15 @@ package com.zzyl.controller;
 
 import com.zzyl.base.ResponseResult;
 import com.zzyl.dto.LoginDto;
+import com.zzyl.entity.User;
+import com.zzyl.mapper.UserMapper;
 import com.zzyl.utils.JwtUtil;
 import com.zzyl.vo.UserVo;
+import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,17 +20,54 @@ import java.util.Map;
 @RestController
 public class LoginController {
 
+    @Autowired
+    private UserMapper userMapper;
 
     @PostMapping("/security/login")
     public ResponseResult login(@RequestBody LoginDto loginDto){
-
-        UserVo userVo = new UserVo();
+        String username = loginDto.getUsername();
+        User user = userMapper.selectByUsername(username);
+        if (user == null) {
+            return ResponseResult.error("用户不存在");
+        }
 
         Map<String,Object> map = new HashMap<>();
-        map.put("username",loginDto.getUsername());
+        map.put("username", user.getUsername());
 
-        userVo.setUserToken(JwtUtil.createJWT("itheima",600000,map));
-        return ResponseResult.success(userVo);
+        String token = JwtUtil.createJWT("itheima", 600000, map);
+        return ResponseResult.success(token);
+    }
+
+    @GetMapping("/getInfo")
+    public ResponseResult<Map<String, Object>> getInfo(@RequestHeader(name = "Authorization", required = false) String token) {
+        String username = "admin";
+        if (token != null && !token.isEmpty()) {
+            try {
+                String jwt = token.startsWith("Bearer ") ? token.substring(7) : token;
+                Claims claims = JwtUtil.parseJWT("itheima", jwt);
+                username = (String) claims.get("username");
+            } catch (Exception e) {
+                // fallback to default username
+            }
+        }
+        User user = userMapper.selectByUsername(username);
+        if (user == null) {
+            return ResponseResult.success(Map.of(
+                "avatar", "", "realName", "", "name", "",
+                "icon", "", "id", null, "roleName", "",
+                "type", 0, "requestId", ""
+            ));
+        }
+        return ResponseResult.success(Map.of(
+            "avatar", user.getAvatar() != null ? user.getAvatar() : "",
+            "realName", user.getRealName() != null ? user.getRealName() : "",
+            "name", user.getRealName() != null ? user.getRealName() : "",
+            "icon", user.getAvatar() != null ? user.getAvatar() : "",
+            "id", user.getId() != null ? String.valueOf(user.getId()) : "",
+            "roleName", "超级管理员",
+            "type", 0,
+            "requestId", ""
+        ));
     }
 
     @GetMapping("/resource/menus")

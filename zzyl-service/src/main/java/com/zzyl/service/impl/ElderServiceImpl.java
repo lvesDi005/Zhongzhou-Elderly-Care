@@ -155,7 +155,12 @@ public class ElderServiceImpl implements ElderService {
             return;
         }
         for (NursingElderDto dto : list) {
-            logger.info("Setting nursing for elder {}: nursingIds={}", dto.getElderId(), dto.getNursingIds());
+            // 先删除该老人原有的护理计划关联
+            elderMapper.deleteNursingByElderId(dto.getElderId());
+            // 再插入新的关联
+            if (dto.getNursingIds() != null && !dto.getNursingIds().isEmpty()) {
+                elderMapper.insertNursing(dto.getElderId(), dto.getNursingIds());
+            }
         }
     }
 }

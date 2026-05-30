@@ -32,7 +32,11 @@ public class NursingPlanServiceImpl implements NursingPlanService {
 
     @Override
     public NursingPlan selectById(Long id) {
-        return nursingPlanMapper.selectById(id);
+        NursingPlan plan = nursingPlanMapper.selectById(id);
+        if (plan != null) {
+            plan.setProjectPlans(nursingPlanMapper.selectProjectPlansByPlanId(plan.getId().intValue()));
+        }
+        return plan;
     }
 
     @Override

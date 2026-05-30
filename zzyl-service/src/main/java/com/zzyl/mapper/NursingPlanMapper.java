@@ -1,11 +1,8 @@
 package com.zzyl.mapper;
 
 import com.zzyl.entity.NursingPlan;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import com.zzyl.entity.NursingProjectPlan;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -17,7 +14,6 @@ public interface NursingPlanMapper {
     @Select("select * from nursing_plan")
     List<NursingPlan> selectAll();
 
-    @Select("select * from nursing_plan where id = #{id}")
     NursingPlan selectById(Long id);
 
     int insert(NursingPlan nursingPlan);
@@ -29,4 +25,7 @@ public interface NursingPlanMapper {
 
     @Update("update nursing_plan set status = #{status} where id = #{id}")
     void updateStatus(@Param("id") Long id, @Param("status") Integer status);
+
+    @Select("select npp.*, np.name as project_name from nursing_project_plan npp left join nursing_project np on npp.project_id = np.id where npp.plan_id = #{planId}")
+    List<NursingProjectPlan> selectProjectPlansByPlanId(@Param("planId") Integer planId);
 }

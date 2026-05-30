@@ -54,8 +54,7 @@ public class JwtUtil {
                     .parseClaimsJws(token).getBody();
             return claims;
         } catch (Exception e) {
-//            throw new AccessDeniedException("没有权限,请登录");
-            throw new RuntimeException("没有权限,请登录");
+            throw new RuntimeException("没有权限,请登录: " + e.getMessage());
         }
     }
 

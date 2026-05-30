@@ -7,28 +7,28 @@ export const COLUMNS = [
   {
     title: '老人姓名',
     width: 100,
-    colKey: 'phone'
+    colKey: 'name'
   },
 
   {
     title: '性别',
     width: 70,
-    colKey: 'phone'
+    colKey: 'sex'
   },
   {
     title: '年龄',
     width: 70,
-    colKey: 'phone'
+    colKey: 'age'
   },
   {
     title: '护理等级',
     width: 100,
-    colKey: 'phone'
+    colKey: 'nursingLevel'
   },
   {
     title: '入住期限',
     width: 150,
-    colKey: 'phone'
+    colKey: 'checkTime'
   },
   {
     align: 'left',

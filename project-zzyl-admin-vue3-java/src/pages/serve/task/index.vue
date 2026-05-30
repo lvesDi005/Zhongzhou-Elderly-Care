@@ -217,9 +217,9 @@ const handleForbiddenSub = async () => {
 // 搜索功能
 const handleSearch = (params) => {
   pagination.value.pageNum = 1
-  if (params.length) {
-    pagination.value.startTime = new Date(params[0]).getTime()
-    pagination.value.endTime = new Date(params[1]).getTime()
+  if (params && params.length) {
+    pagination.value.startTime = params[0]
+    pagination.value.endTime = params[1]
   }
 
   getList()

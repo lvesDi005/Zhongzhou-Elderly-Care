@@ -1,11 +1,7 @@
 package com.zzyl.mapper;
 
 import com.zzyl.entity.NursingLevel;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -17,7 +13,6 @@ public interface NursingLevelMapper {
     @Select("select * from nursing_level")
     List<NursingLevel> selectAll();
 
-    @Select("select * from nursing_level where id = #{id}")
     NursingLevel selectById(Long id);
 
     int insert(NursingLevel nursingLevel);

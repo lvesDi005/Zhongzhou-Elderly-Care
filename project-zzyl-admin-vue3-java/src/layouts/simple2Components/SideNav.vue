@@ -117,11 +117,9 @@ const active = computed(() => {
 // 展开的菜单
 const defaultExpanded = computed(() => {
   const defaultExpanded = []
-  // console.log(permissionStore.dynamic, 'permissionStore.dynamic')
-  // 将三级路由全部遍历添加到数组中并返回，确保点击三级对应的二级路由下拉不会收起
-  permissionStore.dynamic.forEach((item) => {
+  // 使用格式化后的路由数据来构建展开路径
+  permissionStore.routers.forEach((item) => {
     item.children?.forEach((item1) => {
-      // console.log(item1, 'item1')
       if (!item1.children?.length) {
         defaultExpanded.push(`${item.path}/${item1.path}`)
       } else {

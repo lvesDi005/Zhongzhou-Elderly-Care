@@ -20,9 +20,9 @@
             @reset="onClickCloseBtn"
             @submit="onSubmit"
           >
-            <t-form-item label="护理员姓名：" name="bedNumber">
+            <t-form-item label="护理员姓名：" name="nursingIds">
               <t-select
-                v-model="formData.bedNumber"
+                v-model="formData.nursingIds"
                 class="wt-400"
                 placeholder="请输入"
                 clearable
@@ -93,7 +93,7 @@ const formVisible = ref(false) // 弹窗
 const formData = ref<Object | any>({})
 // 表单校验
 const rules = {
-  bedNumber: [
+  nursingIds: [
     {
       required: true,
       message: '护理员为空，请选择护理员',
@@ -119,7 +119,7 @@ watch(
   () => props.visible,
   () => {
     formVisible.value = props.visible
-    formData.value.bedNumber = props.singleNurse
+    formData.value.nursingIds = props.singleNurse
     console.log(props.singleNurse, 'val')
   }
 )
@@ -128,12 +128,11 @@ watch(
 // 提交表单
 const onSubmit = (result: ValidateResultContext<FormData>) => {
   if (result.validateResult === true) {
-    emit('handleSubmit', formData.value.bedNumber)
-    // form.value.clearValidate()
+    emit('handleSubmit', formData.value.nursingIds)
   }
 }
 const handleChange = (val) => {
-  formData.value.bedNumber = val
+  formData.value.nursingIds = val
   console.log(val, '-----------')
 }
 // 清除表单数据

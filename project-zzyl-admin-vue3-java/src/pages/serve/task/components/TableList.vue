@@ -23,7 +23,7 @@
         <!-- end -->
         <!-- 护理员 -->
         <template #nursingName="{ row }">{{
-          row.nursingName ? row.nursingName.join(',') : '--'
+          row.nursingName ? (Array.isArray(row.nursingName) ? row.nursingName.join(',') : row.nursingName) : '--'
         }}</template>
         <!-- end -->
         <!-- 老人姓名 -->

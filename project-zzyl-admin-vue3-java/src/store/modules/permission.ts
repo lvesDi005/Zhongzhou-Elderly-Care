@@ -42,9 +42,8 @@ export const usePermissionStore = defineStore('permission', {
     // 用于style风格中的tooMany当页面刷新时， 左侧菜单数据保存,并且将路由的二级路由带parent字段的整合到parent对应的二级路由中作为三级路由
     initCurrentRoutes() {
       const routeArr = this.isDynamic
-        ? this.dynamic.concat(fixRouter) // 给动态路由添加不需要配置的固定路由
+        ? this.routers.concat(fixRouter) // 使用格式化后的路由数据
         : this.routers
-      console.log(routeArr, 'routeArr')
       // 动态路由(动态路由配置时需要保证菜单路径和本地路由路径统一)
       const childrenRoutes = routeArr.filter((item) =>
         window.location.hash.includes(item.path)

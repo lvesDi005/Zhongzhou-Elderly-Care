@@ -298,4 +298,12 @@
     from sys_user
     where username = #{username,jdbcType=VARCHAR}
   </select>
+  <select id="selectList" resultType="com.zzyl.entity.User">
+    select * from sys_user where dept_no = #{deptNo}
+  </select>
+  <select id="selectListByDeptNo" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from sys_user
+    where dept_no = #{deptNo}
+  </select>
 </mapper>

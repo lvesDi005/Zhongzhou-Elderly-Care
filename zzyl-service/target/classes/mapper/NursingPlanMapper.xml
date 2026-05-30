@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zzyl.mapper.NursingPlanMapper">
+    <resultMap id="planVoMap" type="com.zzyl.entity.NursingPlan">
+        <id column="id" property="id"/>
+        <result column="sort_no" property="sortNo"/>
+        <result column="plan_name" property="planName"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="remark" property="remark"/>
+        <result column="real_name" property="creator"/>
+    </resultMap>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into nursing_plan(sort_no, plan_name, status, create_time, create_by, update_by, remark)
         values (#{sortNo}, #{planName}, #{status}, #{createTime}, #{createBy}, #{updateBy}, #{remark})
@@ -16,16 +28,24 @@
             remark     = #{remark}
         where id = #{id}
     </update>
-    <select id="selectByPage" resultType="com.zzyl.entity.NursingPlan">
-        select * from nursing_plan
+    <select id="selectByPage" resultMap="planVoMap">
+        select np.*, su.real_name
+        from nursing_plan np
+        left join sys_user su on np.create_by = su.id
         <where>
             <if test="planName != null and planName != ''">
-                and plan_name like concat('%',#{planName},'%')
+                and np.plan_name like concat('%',#{planName},'%')
             </if>
             <if test="status != null">
-                and status = #{status}
+                and np.status = #{status}
             </if>
         </where>
-        order by sort_no
+        order by np.sort_no
+    </select>
+    <select id="selectById" resultMap="planVoMap">
+        select np.*, su.real_name
+        from nursing_plan np
+        left join sys_user su on np.create_by = su.id
+        where np.id = #{id}
     </select>
 </mapper>

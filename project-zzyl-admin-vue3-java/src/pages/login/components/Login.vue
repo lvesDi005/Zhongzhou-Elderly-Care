@@ -99,7 +99,7 @@ const onSubmit = async ({ validateResult }) => {
     await userLogins(formData.value).then(async (res: any) => {
       if (res.code === 200) {
         // 用户token写入 pinia
-        await userStore.login(res.data.userToken)
+        await userStore.login(res.data)
         userStore.setUserInfo(res.data)
         loadSt.value = false
         // 获取路由权限信息

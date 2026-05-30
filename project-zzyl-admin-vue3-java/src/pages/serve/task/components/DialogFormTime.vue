@@ -100,14 +100,15 @@ watch(
 // 提交表单
 const onSubmit = (result: ValidateResultContext<FormData>) => {
   if (result.validateResult === true) {
-    let time = null
-    if (formData.value.estimatedServerTime === undefined) {
-      // tdesign的日期选择有bug，选择的时间和实际组件抛出的时间相差8个小时
-      time = new Date(formData.value.estimatedServerTime).getTime()
-    } else {
-      time = new Date(formData.value.estimatedServerTime).getTime()
-    }
-    emit('handleSubmit', { estimatedServerTime: time })
+    const d = new Date(formData.value.estimatedServerTime)
+    const year = d.getFullYear()
+    const month = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
+    const hours = String(d.getHours()).padStart(2, '0')
+    const minutes = String(d.getMinutes()).padStart(2, '0')
+    const seconds = String(d.getSeconds()).padStart(2, '0')
+    const timeStr = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+    emit('handleSubmit', { estimatedServerTime: timeStr })
     onClickCloseBtn()
   }
 }

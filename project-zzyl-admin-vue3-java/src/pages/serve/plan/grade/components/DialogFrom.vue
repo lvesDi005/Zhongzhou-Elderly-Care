@@ -31,9 +31,9 @@
               >
               </t-input>
             </t-form-item>
-            <t-form-item label="执行护理计划：" name="planId">
+            <t-form-item label="执行护理计划：" name="lplanId">
               <t-select
-                v-model="formData.planId"
+                v-model="formData.lplanId"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -136,7 +136,7 @@ const formVisible = ref(false) // 弹窗
 // 表单数据
 const formData = ref<Object | any>({
   status: 1,
-  free: 0
+  fee: 0
 })
 
 // 表单校验

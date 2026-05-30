@@ -24,8 +24,12 @@ public class NursingTaskController {
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(required = false) String elderName,
             @RequestParam(required = false) Integer status,
-            @RequestParam(required = false) Integer planId) {
-        return ResponseResult.success(nursingTaskService.selectByPage(pageNum, pageSize, elderName, status, planId));
+            @RequestParam(required = false) Integer planId,
+            @RequestParam(required = false) Long nurseId,
+            @RequestParam(required = false) Long projectId,
+            @RequestParam(required = false) String startTime,
+            @RequestParam(required = false) String endTime) {
+        return ResponseResult.success(nursingTaskService.selectByPage(pageNum, pageSize, elderName, status, planId, nurseId, projectId, startTime, endTime));
     }
 
     @PutMapping("/do")
@@ -34,7 +38,7 @@ public class NursingTaskController {
                                    @RequestParam(required = false) String estimatedServerTime,
                                    @RequestParam(required = false) String mark,
                                    @RequestParam(required = false) String taskImage) {
-        nursingTaskService.executeTask(taskId, null, estimatedServerTime, estimatedServerTime, taskImage, mark);
+        nursingTaskService.executeTask(taskId, estimatedServerTime, mark, taskImage);
         return ResponseResult.success();
     }
 

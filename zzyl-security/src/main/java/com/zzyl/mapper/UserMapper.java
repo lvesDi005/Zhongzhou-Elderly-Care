@@ -1,5 +1,6 @@
 package com.zzyl.mapper;
 
+import com.zzyl.base.PageResponse;
 import com.zzyl.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -31,4 +32,8 @@ public interface UserMapper {
     int batchInsert(@Param("list") List<User> list);
 
     User selectByUsername(@Param("username") String username);
+
+    User selectList();
+
+    List<User> selectListByDeptNo(@Param("deptNo") String deptNo);
 }

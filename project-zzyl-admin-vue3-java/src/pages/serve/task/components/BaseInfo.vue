@@ -26,7 +26,7 @@
       <div class="info-item">
         <h1 class="label-wt-long">护理员姓名：</h1>
         <span>{{
-          baseData.nursingName ? baseData.nursingName.join(',') : '--'
+          baseData.nursingName ? (Array.isArray(baseData.nursingName) ? baseData.nursingName.join(',') : baseData.nursingName) : '--'
         }}</span>
       </div>
       <div class="info-item headImg">

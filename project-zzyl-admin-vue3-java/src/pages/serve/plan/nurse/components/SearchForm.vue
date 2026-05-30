@@ -4,14 +4,14 @@
     <t-form ref="form" :model="searchData" :label-width="98">
       <t-row>
         <t-col>
-          <t-form-item label="护理计划名称：" name="name">
+          <t-form-item label="护理计划名称：" name="planName">
             <t-input
-              v-model="searchData.name"
+              v-model="searchData.planName"
               class="form-item-content"
               type="search"
               placeholder="请输入"
               clearable
-              @clear="handleClear('name')"
+              @clear="handleClear('planName')"
             />
           </t-form-item>
         </t-col>

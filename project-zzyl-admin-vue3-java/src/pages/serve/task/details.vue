@@ -61,11 +61,12 @@ onMounted(() => {
 // ------定义方法------
 // // 获取列表数据
 const getBaseData = async () => {
-  const res: any = await getTaskDetail({ taskId: taskId.value }) // 获取列表数据
+  const res: any = await getTaskDetail({ id: taskId.value }) // 获取列表数据
   if (res.code === 200) {
     baseData.value = res.data
-    // 年龄需要前端算
-    baseData.value.age = getBirthday(baseData.value.idCardNo).age
+    if (baseData.value.idCardNo) {
+      baseData.value.age = getBirthday(baseData.value.idCardNo).age
+    }
   }
 }
 // 返回

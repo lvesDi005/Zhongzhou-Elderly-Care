@@ -140,7 +140,8 @@ watch(
   (val) => {
     formVisible.value = props.visible
     if (val) {
-      formData.value.estimatedServerTime = new Date().getTime()
+      const d = new Date()
+      formData.value.estimatedServerTime = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`
     }
   }
 )
@@ -153,13 +154,14 @@ const onSubmit = (result: ValidateResultContext<FormData>) => {
 }
 // 获取时间
 const handleChange = (date) => {
-  console.log(
-    date,
-    formData.value.estimatedServerTime,
-    new Date(date).getTime(),
-    'date1'
-  )
-  formData.value.estimatedServerTime = new Date(date).getTime()
+  const d = new Date(date)
+  const year = d.getFullYear()
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  const hours = String(d.getHours()).padStart(2, '0')
+  const minutes = String(d.getMinutes()).padStart(2, '0')
+  const seconds = String(d.getSeconds()).padStart(2, '0')
+  formData.value.estimatedServerTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
 }
 // 清除表单数据
 const handleClear = () => {

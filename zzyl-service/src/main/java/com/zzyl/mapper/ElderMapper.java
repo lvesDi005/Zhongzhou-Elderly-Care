@@ -5,6 +5,8 @@ import com.github.pagehelper.Page;
 import com.zzyl.entity.Elder;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -75,5 +77,16 @@ public interface ElderMapper {
 
     @Update("UPDATE elder SET bed_number = null ,bed_id = null WHERE id = #{elderId}")
     void clearBedNum(Long elderId);
+
+    @Delete("DELETE FROM elder_nursing WHERE elder_id = #{elderId}")
+    void deleteNursingByElderId(Long elderId);
+
+    @Insert("<script>" +
+            "INSERT INTO elder_nursing (elder_id, nursing_plan_id, create_time) VALUES " +
+            "<foreach collection='nursingIds' item='nursingId' separator=','>" +
+            "(#{elderId}, #{nursingId}, NOW())" +
+            "</foreach>" +
+            "</script>")
+    void insertNursing(@Param("elderId") Long elderId, @Param("nursingIds") List<Long> nursingIds);
 }
 

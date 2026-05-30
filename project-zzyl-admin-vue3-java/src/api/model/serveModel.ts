@@ -10,7 +10,7 @@ export interface ListModel {
   fee: number
   id: number
   name: string
-  planId: number
+  lplanId: number
   planName: string
   status: number
   updateBy: number
@@ -24,7 +24,7 @@ export interface FormLevel {
   fee: number
   id: number
   name: string
-  planId: number
+  lplanId: number
   planName: string
   status: number
   updateBy: number
@@ -80,6 +80,7 @@ export interface PlanListModel {
       id: number
       planId: number
       projectId: number
+      projectName: string
       updateBy: number
       updateTime: string
     }

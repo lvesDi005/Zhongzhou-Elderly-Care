@@ -12,4 +12,6 @@ public class NursingLevel extends BaseEntity {
     private BigDecimal fee;
     private Integer status;
     private String description;
+
+    private String planName;
 }

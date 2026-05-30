@@ -10,4 +10,6 @@ public class NursingProjectPlan extends BaseEntity {
     private String executeTime;
     private Integer executeCycle;
     private Integer executeFrequency;
+
+    private String projectName;
 }

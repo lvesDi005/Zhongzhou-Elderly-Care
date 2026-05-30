@@ -264,8 +264,8 @@ const handleLookClose = () => {
 }
 // 清空搜索表单
 const handleClear = (v) => {
-  if (v === 'name') {
-    delete pagination.value.name
+  if (v === 'planName') {
+    delete pagination.value.planName
   } else {
     delete pagination.value.status
   }
