@@ -50,8 +50,8 @@ export const useUserStore = defineStore('user', {
       this.unusualBedId = [...arr]
       // console.log(data, [...data], 'data')
     },
-    async login(token: string) {
-      this.token = `${token}`
+    async login(data: any) {
+      this.token = typeof data === 'string' ? `${data}` : `${data.token}` || ''
     },
     async setMenuListdata(data: any) {
       this.menuListdata = data

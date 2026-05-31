@@ -11,8 +11,8 @@ com\zzyl\controller\CommonController.class
 com\zzyl\controller\NursingTaskController.class
 com\zzyl\controller\BaseController.class
 com\zzyl\controller\ElderController.class
+com\zzyl\controller\NursingProjectController.class
 com\zzyl\controller\VisitController.class
 com\zzyl\controller\BedController.class
-com\zzyl\controller\NursingController.class
 com\zzyl\controller\UserController.class
 com\zzyl\controller\NursingPlanController.class

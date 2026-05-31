@@ -3,12 +3,9 @@ package com.zzyl.controller;
 import com.zzyl.base.PageResponse;
 import com.zzyl.base.ResponseResult;
 import com.zzyl.entity.NursingProject;
-import com.zzyl.entity.User;
-import com.zzyl.mapper.UserMapper;
 import com.zzyl.service.NursingService;
 import com.zzyl.vo.NursingProjectVo;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/nursing_project")
-public class NursingController {
+public class NursingProjectController {
 
     @Autowired
     private NursingService nursingService;

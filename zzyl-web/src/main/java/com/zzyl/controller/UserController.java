@@ -36,15 +36,22 @@ public class UserController extends BaseController {
     @GetMapping("/current-user")
     @ApiOperation("获取当前用户信息")
     public ResponseResult<Map<String, Object>> currentUser(@RequestHeader(name = "Authorization", required = false) String token) {
-        String username = "admin";
+        String username = null;
         if (token != null && !token.isEmpty()) {
             try {
                 String jwt = token.startsWith("Bearer ") ? token.substring(7) : token;
                 Claims claims = JwtUtil.parseJWT("itheima", jwt);
                 username = (String) claims.get("username");
             } catch (Exception e) {
-                // fallback to default
+                // token parse failed
             }
+        }
+        if (username == null) {
+            return success(Map.of(
+                "realName", "", "avatar", "", "email", "",
+                "mobile", "", "sex", "0", "id", null,
+                "deptName", "", "postName", "", "roleNames", new ArrayList<>()
+            ));
         }
         User user = userMapper.selectByUsername(username);
         if (user == null) {

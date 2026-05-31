@@ -10,6 +10,8 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,31 +26,61 @@ public class LoginController {
     private UserMapper userMapper;
 
     @PostMapping("/security/login")
-    public ResponseResult login(@RequestBody LoginDto loginDto){
+    public ResponseResult login(@RequestBody LoginDto loginDto) {
         String username = loginDto.getUsername();
+        String password = loginDto.getPassword();
+
+        if (username == null || username.isEmpty()) {
+            return ResponseResult.error("用户名不能为空");
+        }
+        if (password == null || password.isEmpty()) {
+            return ResponseResult.error("密码不能为空");
+        }
+
         User user = userMapper.selectByUsername(username);
         if (user == null) {
             return ResponseResult.error("用户不存在");
         }
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("username", user.getUsername());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            return ResponseResult.error("密码错误");
+        }
 
-        String token = JwtUtil.createJWT("itheima", 600000, map);
-        return ResponseResult.success(token);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", user.getUsername());
+
+        String token = JwtUtil.createJWT("itheima", 600000, claims);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("token", token);
+        result.put("id", user.getId());
+        result.put("username", user.getUsername());
+        result.put("realName", user.getRealName());
+        result.put("avatar", user.getAvatar());
+        result.put("nickName", user.getNickName());
+
+        return ResponseResult.success(result);
     }
 
     @GetMapping("/getInfo")
     public ResponseResult<Map<String, Object>> getInfo(@RequestHeader(name = "Authorization", required = false) String token) {
-        String username = "admin";
+        String username = null;
         if (token != null && !token.isEmpty()) {
             try {
                 String jwt = token.startsWith("Bearer ") ? token.substring(7) : token;
                 Claims claims = JwtUtil.parseJWT("itheima", jwt);
                 username = (String) claims.get("username");
             } catch (Exception e) {
-                // fallback to default username
+                // token parse failed
             }
+        }
+        if (username == null) {
+            return ResponseResult.success(Map.of(
+                "avatar", "", "realName", "", "name", "",
+                "icon", "", "id", null, "roleName", "",
+                "type", 0, "requestId", ""
+            ));
         }
         User user = userMapper.selectByUsername(username);
         if (user == null) {

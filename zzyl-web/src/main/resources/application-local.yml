@@ -1,0 +1,27 @@
+spring:
+  #数据源配置
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3307/zzly?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      username: root
+      password: 666321
+
+zzyl:
+  framework:
+    swagger:
+      swagger-path: com.zzyl.controller
+      title: 智慧养老服务
+      description: 智慧养老
+      contact-name: 黑马研究院
+      contact-url: www.itheima.com
+      contact-email: itheima@itcast.cn
+    jwt:
+      base64-encoded-secret-key: $2a$10$PVtHnkj86mJgf6li/yron.LRx/cQAlaiZkBJ9BeogCNTryXJRT1YC
+      #单位：小时
+      ttl: 24
+    oss:
+      endpoint: oss-cn-beijing.aliyuncs.com
+      accessKeyId: LTAI5t9GVu7SEU2stdNSRpzW
+      accessKeySecret: kUwg5Sbd6UDCMAY09aMU2FwYTjZEPw
+      bucketName: yl6668
