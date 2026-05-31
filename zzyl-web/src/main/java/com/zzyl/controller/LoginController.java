@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author sjqn
- * 后台登录临时接口，后期会进行改造
  */
 @RestController
 public class LoginController {
@@ -73,33 +73,37 @@ public class LoginController {
                 username = (String) claims.get("username");
             } catch (Exception e) {
                 // token parse failed
+                throw new RuntimeException("系统繁忙，请稍后再试！");
             }
         }
         if (username == null) {
-            return ResponseResult.success(Map.of(
-                "avatar", "", "realName", "", "name", "",
-                "icon", "", "id", null, "roleName", "",
-                "type", 0, "requestId", ""
-            ));
+            Map<String, ? extends Serializable> stringMap = Map.of(
+                    "avatar", "", "realName", "", "name", "",
+                    "icon", "", "id", null, "roleName", "",
+                    "type", 0, "requestId", ""
+            );
+            return ResponseResult.success(stringMap);
         }
         User user = userMapper.selectByUsername(username);
         if (user == null) {
-            return ResponseResult.success(Map.of(
-                "avatar", "", "realName", "", "name", "",
-                "icon", "", "id", null, "roleName", "",
-                "type", 0, "requestId", ""
-            ));
+            Map<String, ? extends Serializable> stringMap = Map.of(
+                    "avatar", "", "realName", "", "name", "",
+                    "icon", "", "id", null, "roleName", "",
+                    "type", 0, "requestId", ""
+            );
+            return ResponseResult.success(stringMap);
         }
-        return ResponseResult.success(Map.of(
-            "avatar", user.getAvatar() != null ? user.getAvatar() : "",
-            "realName", user.getRealName() != null ? user.getRealName() : "",
-            "name", user.getRealName() != null ? user.getRealName() : "",
-            "icon", user.getAvatar() != null ? user.getAvatar() : "",
-            "id", user.getId() != null ? String.valueOf(user.getId()) : "",
-            "roleName", "超级管理员",
-            "type", 0,
-            "requestId", ""
-        ));
+        Map<String, ? extends Serializable> stringMap = Map.of(
+                "avatar", user.getAvatar() != null ? user.getAvatar() : "",
+                "realName", user.getRealName() != null ? user.getRealName() : "",
+                "name", user.getRealName() != null ? user.getRealName() : "",
+                "icon", user.getAvatar() != null ? user.getAvatar() : "",
+                "id", user.getId() != null ? String.valueOf(user.getId()) : "",
+                "roleName", "超级管理员",
+                "type", 0,
+                "requestId", ""
+        );
+        return ResponseResult.success(stringMap);
     }
 
     @GetMapping("/resource/menus")
