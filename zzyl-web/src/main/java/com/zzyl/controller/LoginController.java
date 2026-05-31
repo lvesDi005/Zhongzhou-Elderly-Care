@@ -50,7 +50,7 @@ public class LoginController {
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", user.getUsername());
 
-        String token = JwtUtil.createJWT("itheima", 600000, claims);
+        String token = JwtUtil.createJWT("itheima", 300000, claims);
 
         Map<String, Object> result = new HashMap<>();
         result.put("token", token);

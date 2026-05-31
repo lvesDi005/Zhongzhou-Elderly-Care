@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: zzyl
+
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 6MB
+
+  profiles:
+    active: local   # 核心：启动时自动加载 application-local.yml
+
+server:
+  #端口
+  port: 9995
+  #服务编码
+  tomcat:
+    uri-encoding: UTF-8
+
+# MyBatis配置
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath*:mapper*/*Mapper.xml
+  type-aliases-package: com.zzyl.entity
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 驼峰下划线转换
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    default-statement-timeout: 60
+    default-fetch-size: 100
+logging:
+  config: classpath:logback.xml
+  level:
+    org.springframework.web.socket: debug
+knife4j:
+  enable: true
