@@ -10,3 +10,7 @@
 /dataSources.local.xml
 # Application configuration files
 **/application-local.yml
+
+# Maven 编译输出
+target/
+**/target/
